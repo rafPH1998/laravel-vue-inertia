@@ -6,7 +6,10 @@
     @vite('resources/js/app.js')
     @inertiaHead
   </head>
-  <body>
-    @inertia
+
+  <body class="bg-gray-900">
+    <div class="flex justify-center mt-4">
+      @inertia
+    </div>
   </body>
 </html>
