@@ -19,4 +19,16 @@ class CustomerController extends Controller
     {
         return Inertia::render('Create');
     }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|min:2|max:100',    
+            'email' => 'required|email|unique:customers,email',    
+        ]);
+
+        Customer::create($data);
+
+        return redirect()->route('users.index');
+    }
 }
