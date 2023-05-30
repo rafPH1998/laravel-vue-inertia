@@ -1,10 +1,14 @@
 <template>
     <div>
         <h1 class="text-white">Tabela de usuários</h1>
+    
+        <div class="flex flex-col">
+            <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
 
-        <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
+            <alert-message :message="getMessage" :show-message="showMessage" />
+        </div>
 
-        <table class="border-collapse border border-slate-500 text-white w-96 mt-10 bg-gray-800" 
+        <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800" 
             v-if="customers.data.length !== 0">
             <thead class="bg-gray-700">
                 <tr>
@@ -33,11 +37,20 @@
 </template>
 
 <script setup>
-    import { Link } from '@inertiajs/vue3';
-    components: {
-        Link
-    }
+    import { Link, usePage } from '@inertiajs/vue3';
+    import { computed, ref } from 'vue'
+    import AlertMessage from './components/AlertMessage.vue'
+
     defineProps({
         customers: Object
     })
+
+    const page = usePage()
+    const getMessage = computed(() => page.props.flash.success)
+    const showMessage = ref(true)
+
+    setTimeout(() => {
+        showMessage.value = false
+    }, 3000)
+
 </script>

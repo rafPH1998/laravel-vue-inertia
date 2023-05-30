@@ -11,7 +11,7 @@ class CustomerController extends Controller
     public function index()
     {
         return Inertia::render('Index', [
-            'customers' => Customer::paginate()
+            'customers' => Customer::paginate(20)
         ]);
     }
 
@@ -29,6 +29,6 @@ class CustomerController extends Controller
 
         Customer::create($data);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
     }
 }
