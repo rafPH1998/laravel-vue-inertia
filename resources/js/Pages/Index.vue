@@ -2,7 +2,8 @@
     <div>
         <h1 class="text-white">Tabela de usuários</h1>
 
-        <a href="" class="">Adicionar usuarios</a>
+        <Link href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
+
         <table class="border-collapse border border-slate-500 text-white w-96 mt-10 bg-gray-800" 
             v-if="customers.data.length !== 0">
             <thead class="bg-gray-700">
@@ -32,6 +33,10 @@
 </template>
 
 <script setup>
+    import { Link } from '@inertiajs/vue3';
+    components: {
+        Link
+    }
     defineProps({
         customers: Object
     })

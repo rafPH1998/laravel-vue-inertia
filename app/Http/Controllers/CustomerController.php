@@ -14,4 +14,9 @@ class CustomerController extends Controller
             'customers' => Customer::paginate()
         ]);
     }
+
+    public function create()
+    {
+        return Inertia::render('Create');
+    }
 }
