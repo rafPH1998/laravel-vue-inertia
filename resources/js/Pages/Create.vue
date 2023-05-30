@@ -13,7 +13,7 @@
                 <span class="text-red-600 text-xs">Erro</span>
 
                 <button class="mt-4 text-white bg-blue-700 rounded-full text-xs p-2 hover:bg-blue-800">Salvar</button>
-                <Link href="/" class="text-blue-600 flex justify-center text-xs mt-2">Voltar</Link>
+                <Link :href="route('users.index')" class="text-blue-600 flex justify-center text-xs mt-2">Voltar</Link>
             </form>
         </div>
     </div>

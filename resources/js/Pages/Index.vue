@@ -2,7 +2,7 @@
     <div>
         <h1 class="text-white">Tabela de usuários</h1>
 
-        <Link href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
+        <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
 
         <table class="border-collapse border border-slate-500 text-white w-96 mt-10 bg-gray-800" 
             v-if="customers.data.length !== 0">
