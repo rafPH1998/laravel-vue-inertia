@@ -5,10 +5,14 @@
         <div class="flex flex-col">
             <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
 
-            <alert-message :message="getMessage" :show-message="showMessage" />
+            <span v-show="processingSuccess" class="text-green-500">Usuário deletado com sucesso!</span>
         </div>
 
-        <Modal :modal="modal" @closeModal="modal.show = false"/>
+        <Modal 
+            :modal="modal" 
+            @closeModal="modal.show = false" 
+            @deleteUser="deleteUser(modal.userId)" 
+        />
         
         <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800" 
             v-if="customers.data.length !== 0">
@@ -41,17 +45,14 @@
 </template>
 
 <script setup>
-    import { Link, usePage } from '@inertiajs/vue3';
-    import { computed, ref } from 'vue'
-    import AlertMessage from './components/AlertMessage.vue'
+    import { Link, router } from '@inertiajs/vue3';
+    import { ref } from 'vue'
     import Pagination from './components/Pagination.vue'
     import Modal from './components/Modal.vue'
 
     defineProps({ customers: Object })
 
-    const page = usePage()
-    const getMessage = computed(() => page.props.flash.success)
-    const showMessage = ref(true)
+    const processingSuccess = ref(false)
 
     const modal = ref({
         show: false,
@@ -63,8 +64,18 @@
         modal.value.userId = userId;
     };
 
-    setTimeout(() => {
-        showMessage.value = false
-    }, 3000)
+    const deleteUser = (id) => {
+        router.delete(`/delete/${id}`, {
+            onFinish: () => {
+                processingSuccess.value = true
+                setTimeout(() => {
+                    processingSuccess.value = false
+                }, 3000)
+            }
+        })
+        modal.value.show = false
+    }
+
+ 
 
 </script>
