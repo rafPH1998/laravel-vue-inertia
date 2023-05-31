@@ -34,16 +34,17 @@
             Sem nenhum usuário no sistema.
         </div>
     </div>
+    <Pagination :data="customers"/>
+    
 </template>
 
 <script setup>
     import { Link, usePage } from '@inertiajs/vue3';
     import { computed, ref } from 'vue'
     import AlertMessage from './components/AlertMessage.vue'
+    import Pagination from './components/Pagination.vue'
 
-    defineProps({
-        customers: Object
-    })
+    defineProps({ customers: Object })
 
     const page = usePage()
     const getMessage = computed(() => page.props.flash.success)

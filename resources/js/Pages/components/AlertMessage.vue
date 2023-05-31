@@ -1,7 +1,9 @@
 <template>
-    <span v-if="showMessage" class="text-green-500 mt-6">
-        {{ message }}
-    </span>
+    <div>
+        <span v-if="showMessage" class="text-green-500 mt-6">
+            {{ message }}
+        </span>
+    </div>
 </template>
 
 <script setup>
