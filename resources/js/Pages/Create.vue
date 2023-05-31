@@ -20,7 +20,7 @@
 
                 <button type="submit" :disabled="form.processing" 
                     class="mt-4 text-white bg-blue-700 rounded-full text-xs p-2 hover:bg-blue-800">
-                    <SppinerButton v-show="form.processing"/>
+                    <SppinerLoading v-show="form.processing"/>
                     <span v-if="form.processing">Salvando....</span>
                     <span v-else>Salvar</span>
                 </button>
@@ -35,7 +35,7 @@
     import { Link } from '@inertiajs/vue3';
     import { reactive } from 'vue'
     import { router } from '@inertiajs/vue3'
-    import SppinerButton from './components/SppinerButton.vue'
+    import SppinerLoading from './components/SppinerLoading.vue'
 
     defineProps({
         errors: Object

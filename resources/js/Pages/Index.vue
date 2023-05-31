@@ -8,6 +8,8 @@
             <alert-message :message="getMessage" :show-message="showMessage" />
         </div>
 
+        <Modal :modal="modal" @closeModal="modal.show = false"/>
+        
         <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800" 
             v-if="customers.data.length !== 0">
             <thead class="bg-gray-700">
@@ -25,7 +27,7 @@
                     <td class="border border-slate-700 p-4">{{ customer.email }}</td>
                     <td class="border border-slate-700 p-4">
                         <a href="" class="ml-2 text-xs text-blue-600">Editar</a>
-                        <a href="" class="ml-2 text-xs text-red-600">Excluir</a>
+                        <a href="" class="ml-2 text-xs text-red-600" @click.prevent="openModal(customer.id)">Excluir</a>
                     </td>
                 </tr>
             </tbody>
@@ -43,12 +45,23 @@
     import { computed, ref } from 'vue'
     import AlertMessage from './components/AlertMessage.vue'
     import Pagination from './components/Pagination.vue'
+    import Modal from './components/Modal.vue'
 
     defineProps({ customers: Object })
 
     const page = usePage()
     const getMessage = computed(() => page.props.flash.success)
     const showMessage = ref(true)
+
+    const modal = ref({
+        show: false,
+        userId: null,
+    });
+
+    const openModal = (userId) => {
+        modal.value.show = true;
+        modal.value.userId = userId;
+    };
 
     setTimeout(() => {
         showMessage.value = false

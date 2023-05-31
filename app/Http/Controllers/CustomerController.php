@@ -29,6 +29,16 @@ class CustomerController extends Controller
 
         Customer::create($data);
 
-        return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
+        return redirect()->route('users.index')
+            ->with('success', 'Usuário criado com sucesso!');
     }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return redirect()->route('users.index')
+            ->with('success', 'Usuário deletado com sucesso!');
+    }
+
+    
 }
