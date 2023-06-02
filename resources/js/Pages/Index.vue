@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="text-white">Tabela de usuários</h1>
-    
+
         <div class="flex flex-col">
             <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
 
@@ -13,8 +13,8 @@
             @closeModal="modal.show = false" 
             @deleteUser="deleteUser(modal.userId)" 
         />
-        
-        <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800" 
+
+        <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800 animate__animated animate__fadeIn" 
             v-if="customers.data.length !== 0">
             <thead class="bg-gray-700">
                 <tr>
@@ -30,7 +30,7 @@
                     <td class="border border-slate-700 p-4">{{ customer.name }}</td>
                     <td class="border border-slate-700 p-4">{{ customer.email }}</td>
                     <td class="border border-slate-700 p-4">
-                        <a href="" class="ml-2 text-xs text-blue-600">Editar</a>
+                        <Link :href="route('users.edit', customer.id)" class="ml-2 text-xs text-blue-600">Editar</Link>
                         <a href="" class="ml-2 text-xs text-red-600" @click.prevent="openModal(customer.id)">Excluir</a>
                     </td>
                 </tr>
@@ -59,6 +59,7 @@
         userId: null,
     });
 
+
     const openModal = (userId) => {
         modal.value.show = true;
         modal.value.userId = userId;
@@ -75,7 +76,5 @@
         })
         modal.value.show = false
     }
-
- 
 
 </script>

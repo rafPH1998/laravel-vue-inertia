@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -20,17 +21,31 @@ class CustomerController extends Controller
         return Inertia::render('Create');
     }
 
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|min:2|max:100',    
-            'email' => 'required|email|unique:customers,email',    
-        ]);
-
-        Customer::create($data);
+        Customer::query()->create($request->validated());
 
         return redirect()->route('users.index')
             ->with('success', 'Usuário criado com sucesso!');
+    }
+
+    public function edit(Customer $customer)
+    {
+        return Inertia::render('Edit', ['customer' => $customer]);
+    }
+
+    public function update(Customer $customer, CustomerRequest $request)
+    {
+        $data = $request->only(['name', 'email']);
+
+        try {
+
+            $customer->update($data);
+            return redirect()->route('users.edit', $customer->id);
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function destroy(Customer $customer)
