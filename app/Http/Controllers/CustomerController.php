@@ -11,9 +11,11 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
-        $customers = Customer::when($request->name, function($q) use ($request) {
-            $q->where('name', 'LIKE', "%{$request->name}%");
-        })->paginate(8);
+        $customers = Customer::when(
+            $request->filled('search'), function($q) use ($request) {
+                $q->where('name', 'LIKE', "%{$request->search}%");
+                $q->orWhere('email', '=', $request->search);
+            })->paginate(8);
 
         return Inertia::render('Index', [
             'customers' => $customers

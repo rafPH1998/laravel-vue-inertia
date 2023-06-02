@@ -7,8 +7,7 @@
 
             <form action="#" class="mt-10">
                 <input type="text" 
-                    v-model="name"
-                    name="nameFilter"
+                    v-model="search"
                     placeholder="Busque por um usuário"
                     class="py-2.5 px-3 ml-0 bg-gray-900
                     leading-tight text-gray-500 rounded-l-lg
@@ -68,7 +67,7 @@
     defineProps({ customers: Object })
 
     const processingSuccess = ref(false)
-    const name = ref('')
+    const search = ref('')
 
     const modal = ref({
         show: false,
@@ -93,7 +92,7 @@
     }
 
     const searchUser = () => {
-        router.get('/', {name: name.value})
+        router.get('/', {search: search.value})
     }
 
 </script>
