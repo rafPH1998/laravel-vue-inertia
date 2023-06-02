@@ -9,10 +9,14 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $customers = Customer::when($request->name, function($q) use ($request) {
+            $q->where('name', 'LIKE', "%{$request->name}%");
+        })->paginate(8);
+
         return Inertia::render('Index', [
-            'customers' => Customer::paginate(8)
+            'customers' => $customers
         ]);
     }
 
@@ -42,7 +46,7 @@ class CustomerController extends Controller
 
             $customer->update($data);
             return redirect()->route('users.edit', $customer->id);
-            
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }

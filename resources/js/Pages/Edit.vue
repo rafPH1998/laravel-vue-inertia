@@ -22,8 +22,8 @@
                 <button type="submit" :disabled="form.processing" 
                     class="animate__animated animate__fadeInDown mt-4 text-white bg-blue-700 rounded-full text-xs p-2 hover:bg-blue-800">
                     <SppinerLoading v-show="form.processing"/>
-                    <span v-if="form.processing">Atualizando....</span>
-                    <span v-else>Atualizar</span>
+                    <span v-if="form.processing">Editando...</span>
+                    <span v-else>Editar</span>
                 </button>
                 <Link :href="route('users.index')" class="text-blue-600 flex justify-center text-xs mt-2">Voltar</Link>
             </form>

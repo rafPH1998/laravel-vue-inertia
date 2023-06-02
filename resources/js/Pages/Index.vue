@@ -5,6 +5,22 @@
         <div class="flex flex-col">
             <Link :href="route('users.create')" class="text-blue-600">Adicionar usuários</Link>
 
+            <form action="#" class="mt-10">
+                <input type="text" 
+                    v-model="name"
+                    name="nameFilter"
+                    placeholder="Busque por um usuário"
+                    class="py-2.5 px-3 ml-0 bg-gray-900
+                    leading-tight text-gray-500 rounded-l-lg
+                    border border-gray-300 text-xs text-white">
+                <button @click.prevent="searchUser()" 
+                    class="bg-blue-600 hover:bg-blue-700 
+                    text-white font-bold p-2.5 text-xs 
+                    rounded-r-lg border border-gray-300">
+                    Buscar
+                </button>
+            </form>
+
             <span v-show="processingSuccess" class="text-green-500">Usuário deletado com sucesso!</span>
         </div>
 
@@ -14,7 +30,7 @@
             @deleteUser="deleteUser(modal.userId)" 
         />
 
-        <table class="border-collapse border border-slate-500 text-white w-96 mt-6 bg-gray-800 animate__animated animate__fadeIn" 
+        <table class="border-collapse border border-slate-500 text-white w-96 mt-4 bg-gray-800 animate__animated animate__fadeIn" 
             v-if="customers.data.length !== 0">
             <thead class="bg-gray-700">
                 <tr>
@@ -41,7 +57,6 @@
         </div>
     </div>
     <Pagination :data="customers"/>
-    
 </template>
 
 <script setup>
@@ -53,12 +68,12 @@
     defineProps({ customers: Object })
 
     const processingSuccess = ref(false)
+    const name = ref('')
 
     const modal = ref({
         show: false,
         userId: null,
     });
-
 
     const openModal = (userId) => {
         modal.value.show = true;
@@ -75,6 +90,10 @@
             }
         })
         modal.value.show = false
+    }
+
+    const searchUser = () => {
+        router.get('/', {name: name.value})
     }
 
 </script>
