@@ -47,7 +47,9 @@ class CustomerController extends Controller
         try {
 
             $customer->update($data);
-            return redirect()->route('users.edit', $customer->id);
+            return redirect()
+                ->route('users.edit', $customer->id)
+                ->with('success', 'Usuário editado com sucesso!');
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());

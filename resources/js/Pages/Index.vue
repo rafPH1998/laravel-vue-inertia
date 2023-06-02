@@ -70,7 +70,7 @@
     const search = ref('')
 
     const modal = ref({
-        show: false,
+        show  : false,
         userId: null,
     });
 

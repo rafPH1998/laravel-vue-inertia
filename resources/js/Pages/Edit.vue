@@ -3,21 +3,23 @@
         <div class="border-collapse border border-slate-500 p-10 mt-10 rounded-lg bg-gray-800">
             <h1 class="text-white">Editar usuário: <b>{{customer.name}}</b></h1>
 
-            <span v-show="form.processingSuccess" class="text-green-500">Usuário editado com sucesso!</span>
+            <span v-show="page.props.flash.success" class="text-green-500">{{page.props.flash.success}}</span>
             
             <form @submit.prevent="updateForm()" action="#" method="POST" class="flex flex-col mt-6">
-                <label for="name" class="leading-7 text-sm text-white">Nome</label>
-                <input 
-                    v-model="form.name"
-                    type="text" name="name" id="name" 
-                    class="bg-gray-700 border-collapse border border-slate-500 rounded-lg text-white px-4 py-1">
-                <span class="text-red-600 text-xs" v-if="errors.name">{{ errors.name }}</span>
 
-                <label for="email" class="leading-7 text-sm text-white">E-mail</label>
-                <input v-model="form.email" 
-                    type="email" name="email" id="email"
-                    class="bg-gray-700 border-collapse border border-slate-500 rounded-lg text-white px-4 py-1">
-                <span class="text-red-600 text-xs" v-if="errors.email">{{ errors.email }}</span>
+                <InputField 
+                    label="Nome" v-model="form.name" 
+                    name="name" type="text" 
+                    :error="errors.name" 
+                    @update:modelValue="value => form.name = value"
+                />
+
+                <InputField 
+                    label="E-mail" v-model="form.email" 
+                    name="email" type="email" 
+                    :error="errors.email" 
+                    @update:modelValue="value => form.email = value"
+                />
 
                 <button type="submit" :disabled="form.processing" 
                     class="animate__animated animate__fadeInDown mt-4 text-white bg-blue-700 rounded-full text-xs p-2 hover:bg-blue-800">
@@ -36,6 +38,7 @@
     import { reactive } from 'vue'
     import { router } from '@inertiajs/vue3'
     import SppinerLoading from './components/SppinerLoading.vue'
+    import InputField from './components/InputField.vue'
 
     defineProps({
         customer: Object,
@@ -48,8 +51,7 @@
         id               : page.props.customer.id,
         name             : page.props.customer.name,
         email            : page.props.customer.email,
-        processing       : false,
-        processingSuccess: false
+        processing       : false
     })
 
     const updateForm = () => {
@@ -57,10 +59,6 @@
             onStart: () => (form.processing = true),
             onFinish: () => {
                 form.processing = false
-                form.processingSuccess = true
-                setTimeout(() => {
-                    form.processingSuccess = false
-                }, 3000)
             }
         })
     }

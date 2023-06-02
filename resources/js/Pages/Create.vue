@@ -4,20 +4,8 @@
             <h1 class="text-white">Criar um novo usuário</h1>
 
             <form @submit.prevent="submit()" action="#" method="POST" class="flex flex-col mt-6">
-                <label for="name" class="leading-7 text-sm text-white">Nome</label>
-                <input 
-                    v-model="form.name"
-                    type="text" name="name" id="name" 
-                    class="bg-gray-700 border-collapse border border-slate-500 rounded-lg text-white px-4 py-1">
-                <span class="text-red-600 text-xs" v-if="errors.name">{{ errors.name }}</span>
-
-                <label for="email" class="leading-7 text-sm text-white">E-mail</label>
-                <input v-model="form.email" 
-                    type="email" name="email" id="email"
-                    class="bg-gray-700 border-collapse border border-slate-500 rounded-lg text-white px-4 py-1">
-                <span class="text-red-600 text-xs" v-if="errors.email">{{ errors.email }}</span>
-
-
+                <InputField label="Nome" v-model="form.name" name="name" type="text" :error="errors.name"/>
+                <InputField label="E-mail" v-model="form.email" name="email" type="email" :error="errors.email"/>
                 <button type="submit" :disabled="form.processing" 
                     class="animate__animated animate__fadeInDown mt-4 text-white bg-blue-700 rounded-full text-xs p-2 hover:bg-blue-800">
                     <SppinerLoading v-show="form.processing"/>
@@ -36,6 +24,7 @@
     import { reactive } from 'vue'
     import { router } from '@inertiajs/vue3'
     import SppinerLoading from './components/SppinerLoading.vue'
+    import InputField from './components/InputField.vue'
 
     defineProps({
         errors: Object

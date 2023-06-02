@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-
     defineProps({
         message: {
             type: String,
